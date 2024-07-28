@@ -30,8 +30,8 @@ export class UserService {
       const user = new User();
       user.email = email;
       user.createdAt = new Date().toISOString();
-      await this.userRepository.save(user);
-      return UserConstants.USER_CREATED(user.id);
+      const savedUser = await this.userRepository.save(user);
+      return UserConstants.USER_CREATED(savedUser.id);
     } catch (error) {
       return UserConstants.ERROR_OCCURRED;
     }
