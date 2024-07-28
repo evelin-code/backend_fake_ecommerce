@@ -8,11 +8,6 @@ export class UserController {
 
   constructor(private userService: UserService) {}
 
-  @Get()
-  getAllUsers() {
-    return "BIEN";
-  }
-
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto): Promise<any> {
     return this.userService.createUser(createUserDto);
