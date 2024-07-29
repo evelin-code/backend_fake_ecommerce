@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/user/entity/user';
-import { Product } from 'src/product/entity/product.entity';
+import { User } from './../user/entity/user';
+import { Product } from './../product/entity/product.entity';
 import { Order } from './entity/order';
 import { OrderItem } from './entity/order-item.entity';
 import { OrderConstants } from './config/order.constants';
@@ -29,6 +29,9 @@ export class OrderService {
       const user = await this.findUserById(userId);
       if (!user) return OrderConstants.USER_NOT_FOUND;
 
+      const stockCheckResult = await this.checkStockAvailability(items);
+      if (!stockCheckResult.result) return stockCheckResult.response;
+
       const savedOrder = await this.createOrderEntity(user);
       const { totalCost, orderItemsResult } = await this.processOrderItems(items, savedOrder);
 
@@ -50,10 +53,29 @@ export class OrderService {
   private async createOrderEntity(user: User): Promise<Order> {
     const order = this.orderRepository.create({
       user,
-      status: 'pending',
+      status: 'lq',
       total_cost: 0,
     });
     return this.orderRepository.save(order);
+  }
+
+  private async checkStockAvailability(items: { productId: number; quantity: number }[]): Promise<{ result: boolean, response: any }> {
+    const outOfStockProducts = [];
+
+    for (const { productId, quantity } of items) {
+      const product = await this.productRepository.findOneBy({ id: productId });
+      if (!product) return { result: false, response: OrderConstants.PRODUCT_NOT_FOUND };
+      if (product.stock < quantity) outOfStockProducts.push(productId);
+    }
+
+    if (outOfStockProducts.length > 0) {
+      return { 
+        result: false, 
+        response: OrderConstants.OUT_OF_STOCK(outOfStockProducts)
+      };
+    }
+
+    return { result: true, response: null };
   }
 
   private async processOrderItems(items: { productId: number; quantity: number }[], order: Order): Promise<{ totalCost: number, orderItemsResult: boolean }> {
@@ -61,9 +83,7 @@ export class OrderService {
 
     for (const { productId, quantity } of items) {
       const product = await this.productRepository.findOneBy({ id: productId });
-      if (!product) return { totalCost, orderItemsResult: false };
-
-      if (product.stock < quantity) return { totalCost, orderItemsResult: false };
+      if (!product || product.stock < quantity) return { totalCost, orderItemsResult: false };
 
       await this.saveOrderItem(order, product, quantity);
       totalCost += product.price * quantity;
@@ -81,5 +101,19 @@ export class OrderService {
       order,
     });
     await this.orderItemRepository.save(orderItem);
+  }
+
+  async updateOrderStatus(orderId: number): Promise<any> {
+    try {
+      const order = await this.orderRepository.findOneBy({ id: orderId });
+      if (!order) return OrderConstants.ORDER_NOT_FOUND;
+
+      order.status = 'P';
+      await this.orderRepository.save(order);
+
+      return OrderConstants.ORDER_UPDATED(orderId);
+    } catch (error) {
+      return OrderConstants.ORDER_UPDATE_FAILED;
+    }
   }
 }
