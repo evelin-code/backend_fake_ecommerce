@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
-import { UserService } from './user.service';
-import { User } from './entity/user';
+import { UserService } from './../user.service';
+import { User } from './../entity/user';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { UserConstants } from './config/user.constants';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UserConstants } from './../config/user.constants';
+import { CreateUserDto } from './../dto/create-user.dto';
 
 describe('UserService', () => {
   let service: UserService;

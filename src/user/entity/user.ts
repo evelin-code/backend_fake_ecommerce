@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { IsEmail } from 'class-validator';
-import { Order } from 'src/order/entity/order';
+import { Order } from './../../order/entity/order';
 
 @Entity('tw_users')
 export class User {
