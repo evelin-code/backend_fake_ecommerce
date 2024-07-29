@@ -51,4 +51,69 @@ describe('ProductService', () => {
       expect(result).toEqual(ProductConstants.STOCK_FETCH_FAILED);
     });
   });
+
+  describe('calculateSubtotal', () => {
+    it('should return the total value when all products are available', async () => {
+      const items = [
+        { productId: 1, quantity: 2 },
+        { productId: 2, quantity: 1 }
+      ];
+      const mockProducts = [
+        { id: 1, price: 100, stock: 10 } as Product,
+        { id: 2, price: 200, stock: 20 } as Product
+      ];
+      jest.spyOn(repository, 'findOneBy').mockImplementation(async (criteria) => {
+        const product = mockProducts.find(p => p.id === (criteria as any).id);
+        return product || null;
+      });
+
+      const result = await service.calculateSubtotal(items);
+      expect(result).toEqual(ProductConstants.TOTAL_CALCULATED(400));
+    });
+
+    it('should return OUT_OF_STOCK when some products are out of stock', async () => {
+      const items = [
+        { productId: 1, quantity: 2 },
+        { productId: 2, quantity: 30 }
+      ];
+      const mockProducts = [
+        { id: 1, price: 100, stock: 10 } as Product,
+        { id: 2, price: 200, stock: 20 } as Product
+      ];
+      jest.spyOn(repository, 'findOneBy').mockImplementation(async (criteria) => {
+        const product = mockProducts.find(p => p.id === (criteria as any).id);
+        return product || null;
+      });
+
+      const result = await service.calculateSubtotal(items);
+      expect(result).toEqual(ProductConstants.OUT_OF_STOCK([2]));
+    });
+
+    it('should return PRODUCT_NOT_FOUND when a product is not found', async () => {
+      const items = [
+        { productId: 1, quantity: 2 },
+        { productId: 999, quantity: 1 }
+      ];
+      const mockProducts = [
+        { id: 1, price: 100, stock: 10 } as Product
+      ];
+      jest.spyOn(repository, 'findOneBy').mockImplementation(async (criteria) => {
+        const product = mockProducts.find(p => p.id === (criteria as any).id);
+        return product || null;
+      });
+
+      const result = await service.calculateSubtotal(items);
+      expect(result).toEqual(ProductConstants.PRODUCT_NOT_FOUND);
+    });
+
+    it('should return CALCULATION_FAILED on exception', async () => {
+      const items = [
+        { productId: 1, quantity: 2 }
+      ];
+      jest.spyOn(repository, 'findOneBy').mockRejectedValue(new Error());
+
+      const result = await service.calculateSubtotal(items);
+      expect(result).toEqual(ProductConstants.CALCULATION_FAILED);
+    });
+  });
 });

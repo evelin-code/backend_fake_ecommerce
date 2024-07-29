@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './entity/product.entity';
 
@@ -15,5 +15,10 @@ export class ProductController {
   @Get(':id/stock')
   async getProductStock(@Param('id') id: string) {
     return this.productService.getProductStock(+id);
+  }
+
+  @Post('calculate')
+  async calculateSubtotal(@Body() body: { items: { productId: number; quantity: number }[] }) {
+    return this.productService.calculateSubtotal(body.items);
   }
 }

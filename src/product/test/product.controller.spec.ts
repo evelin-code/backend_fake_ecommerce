@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ProductController } from './../product.controller';
 import { ProductService } from './../product.service';
 import { Product } from './../entity/product.entity';
+import { ProductConstants } from './../config/product.constants';
 
 describe('ProductController', () => {
   let productController: ProductController;
@@ -18,7 +19,8 @@ describe('ProductController', () => {
               { id: 1, name: 'Product A', description: 'Description A', stock: 10, url_img: 'url_a', price: 100 },
               { id: 2, name: 'Product B', description: 'Description B', stock: 20, url_img: 'url_b', price: 200 }
             ]),
-            getProductStock: jest.fn().mockResolvedValue(10)
+            getProductStock: jest.fn().mockResolvedValue(ProductConstants.STOCK_FETCHED(10)),
+            calculateSubtotal: jest.fn().mockResolvedValue(ProductConstants.TOTAL_CALCULATED(500)),
           },
         },
       ],
@@ -45,7 +47,20 @@ describe('ProductController', () => {
       const result = await productController.getProductStock('1');
 
       expect(productService.getProductStock).toHaveBeenCalledWith(1);
-      expect(result).toEqual(10);
+      expect(result).toEqual(ProductConstants.STOCK_FETCHED(10));
+    });
+  });
+
+  describe('calculateSubtotal', () => {
+    it('should return the subtotal value of products', async () => {
+      const items = [
+        { productId: 1, quantity: 2 },
+        { productId: 2, quantity: 1 }
+      ];
+      const result = await productController.calculateSubtotal({ items });
+
+      expect(productService.calculateSubtotal).toHaveBeenCalledWith(items);
+      expect(result).toEqual(ProductConstants.TOTAL_CALCULATED(500));
     });
   });
 });

@@ -28,4 +28,32 @@ export class ProductService {
       return ProductConstants.STOCK_FETCH_FAILED;
     }
   }
+
+  async calculateSubtotal(items: { productId: number; quantity: number }[]): Promise<any> {
+    try {
+      let total = 0;
+      const productPromises = items.map(async item => {
+        const product = await this.productRepository.findOneBy({ id: item.productId });
+        if (!product) {
+          return ProductConstants.PRODUCT_NOT_FOUND;
+        }
+        if (product.stock < item.quantity) {
+          return ProductConstants.OUT_OF_STOCK([item.productId]);
+        }
+        total += product.price * item.quantity;
+        return null;
+      });
+  
+      const results = await Promise.all(productPromises);
+      const errorResults = results.filter(result => result && (result as any).status !== ProductConstants.TOTAL_CALCULATED(0).status);
+  
+      if (errorResults.length > 0) {
+        return errorResults[0];
+      }
+  
+      return ProductConstants.TOTAL_CALCULATED(total);
+    } catch (error) {
+      return ProductConstants.CALCULATION_FAILED;
+    }
+  }
 }
