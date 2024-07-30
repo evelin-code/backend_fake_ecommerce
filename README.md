@@ -42,7 +42,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 **Descripción:** Crea un nuevo usuario con el correo electrónico proporcionado.
 
 **Body:**
-- **email obligatorio**
+- 
   ```json
     {
       "email": "nuevo.usuario@example.com"
@@ -82,4 +82,211 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "status": 0,
     "result": false,
     "message": "Ocurrió un error."
+  }
+
+
+### Obtener Todos los Productos
+
+**URL:** `/product`  
+**Método HTTP:** `GET`  
+**Descripción:** Obtiene una lista de todos los productos registrados.
+
+**Respuestas:**
+- **200 code http**
+  ```json
+  [
+    {
+      "id": 1,
+      "name": "Producto 1",
+      "description": "Producto 1",
+      "stock": 40,
+      "url_img": "url",
+      "price": "600000.00"
+    },
+    {
+      "id": 2,
+      "name": "Producto 2",
+      "description": "producto 2",
+      "stock": 22,
+      "url_img": "url",
+      "price": "45600.00"
+    }
+  ]
+
+
+### Obtener el Stock de un Producto
+
+**URL:** `/product/{idProduct}/stock`  
+**Método HTTP:** `GET`  
+**Descripción:** Obtiene el stock de un producto en particular.
+
+**Respuestas:**
+- **200 code http**
+  ```json
+  {
+    "status": 1,
+    "result": true,
+    "stock": 43,
+    "message": "El stock del producto se recuperó correctamente."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 2,
+    "result": false,
+    "message": "El producto no se encontró."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 3,
+    "result": false,
+    "message": "No se pudo recuperar el stock del producto.",
+  }
+
+
+### Obtener el Subtotal
+
+**URL:** `/product/calculate`  
+**Método HTTP:** `POST`  
+**Descripción:** Obtiene el subtotal de una lista predeterminada de productos (calcula el subtotal).
+
+**Body:**
+- 
+  ```json
+  {
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 1
+      },
+      {
+        "productId": 2,
+        "quantity": 1
+      }
+    ]
+  }
+
+**Respuestas:**
+- **200 code http**
+  ```json
+  {
+    "status": 5,
+    "result": true,
+    "total": 2445600,
+    "message": "El valor total se calculó correctamente."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 4,
+    "result": false,
+    "products": [
+      1
+    ],
+    "message": "No hay stock de algunos productos."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 2,
+    "result": false,
+    "message": "El producto no se encontró."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 6,
+    "result": false,
+    "message": "No se pudo calcular el valor total.",
+  }
+
+
+### Crear un Orden de Compra
+
+**URL:** `/order`  
+**Método HTTP:** `POST`  
+**Descripción:** Crea una nueva orden de compra con la lista de productos proporcionada.
+
+**Body:**
+- 
+  ```json
+  {
+    "user_id": 1,
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 1
+      },
+      {
+        "productId": 2,
+        "quantity": 1
+      }
+    ]
+  }
+
+**Respuestas:**
+
+- **200 code http**
+  ```json
+  {
+    "status": 1,
+    "result": true,
+    "id": 2,
+    "message": "La orden se creó correctamente."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 2,
+    "result": false,
+    "message": "El usuario no se encontró."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 5,
+    "result": false,
+    "message": "No se pudo crear la orden."
+  }
+
+
+### Actualizar estado de la Orden
+
+**URL:** `/order/{idOrder}/status`  
+**Método HTTP:** `PATCH`  
+**Descripción:** Actualiza el estado de la orden a Pagado.
+
+**Respuestas:**
+
+- **200 code http**
+  ```json
+  {
+    "status": 7,
+    "result": true,
+    "id": 2,
+    "message": "El estado de la orden se actualizó correctamente."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 6,
+    "result": false,
+    "message": "La orden no se encontró."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 8,
+    "result": false,
+    "message": "No se pudo actualizar el estado de la orden."
   }
