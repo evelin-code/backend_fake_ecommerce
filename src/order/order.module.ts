@@ -13,6 +13,7 @@ import { Product } from './../product/entity/product.entity';
   ],
   controllers: [OrderController],
   providers: [OrderService],
+  exports: [OrderService],
 })
 
 export class OrderModule {}
