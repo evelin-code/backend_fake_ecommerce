@@ -8,6 +8,8 @@ import { User } from './user/entity/user';
 import { Order } from './order/entity/order';
 import { Product } from './product/entity/product.entity';
 import { OrderItem } from './order/entity/order-item.entity';
+import { Pay } from './pay/entity/pay.entity';
+import { PayModule } from './pay/pay.module';
 
 @Module({
   imports: [
@@ -15,11 +17,12 @@ import { OrderItem } from './order/entity/order-item.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [User, Order, Product, OrderItem],
+      entities: [User, Order, Product, OrderItem, Pay],
     }),
     UserModule,
     OrderModule,
     ProductModule,
+    PayModule
   ],
   controllers: [],
   providers: [],
