@@ -49,9 +49,9 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     }
 
 **Respuestas:**
-- **200 OK**
+
+- **200 CODE HTTP**
   ```json
-  // Posible respuesta 1
   {
     "status": 1,
     "result": true,
@@ -59,7 +59,8 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "message": "El usuario se creó correctamente."
   }
 
-  // Posible respuesta 2
+- **200 CODE HTTP**
+  ```json
   {
     "status": 2,
     "result": true,
@@ -67,14 +68,16 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "message": "El usuario ya existe en el sistema."
   }
 
-  // Posible respuesta 3
+- **200 CODE HTTP**
+  ```json
   {
     "status": 3,
     "result": false,
     "message": "El email no es válido."
   }
 
-  // Posible respuesta 4
+- **200 CODE HTTP**
+  ```json
   {
     "status": 0,
     "result": false,
