@@ -154,7 +154,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 **Descripción:** Obtiene el subtotal de una lista predeterminada de productos (calcula el subtotal).
 
 **Body:**
-- 
+- **json**
   ```json
   {
     "items": [
@@ -214,7 +214,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 **Descripción:** Crea una nueva orden de compra con la lista de productos proporcionada.
 
 **Body:**
-- 
+- **json**
   ```json
   {
     "user_id": 1,
