@@ -20,7 +20,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 **Descripción:** Obtiene una lista de todos los usuarios registrados.
 
 **Respuestas:**
-- **200 OK**
+- **200 code http**
   ```json
   [
     {
@@ -50,7 +50,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 
 **Respuestas:**
 
-- **200 CODE HTTP**
+- **200 code http**
   ```json
   {
     "status": 1,
@@ -59,7 +59,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "message": "El usuario se creó correctamente."
   }
 
-- **200 CODE HTTP**
+- **200 code http**
   ```json
   {
     "status": 2,
@@ -68,7 +68,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "message": "El usuario ya existe en el sistema."
   }
 
-- **200 CODE HTTP**
+- **200 code http**
   ```json
   {
     "status": 3,
@@ -76,7 +76,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "message": "El email no es válido."
   }
 
-- **200 CODE HTTP**
+- **200 code http**
   ```json
   {
     "status": 0,
