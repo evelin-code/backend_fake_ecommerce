@@ -12,7 +12,7 @@ export class User {
   email: string;
 
   @Column()
-  createdAt: string;
+  created_at: string;
 
   @OneToMany(() => Order, order => order.user)
   orders: Order[];

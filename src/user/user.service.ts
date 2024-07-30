@@ -13,6 +13,10 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
+  async getAllUsers(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+  
   async createUser(createUserDto: CreateUserDto): Promise<any> {
     const { email } = createUserDto;
 
@@ -29,7 +33,7 @@ export class UserService {
     try {
       const user = new User();
       user.email = email;
-      user.createdAt = new Date().toISOString();
+      user.created_at = new Date().toISOString();
       const savedUser = await this.userRepository.save(user);
       return UserConstants.USER_CREATED(savedUser.id);
     } catch (error) {
