@@ -1,18 +1,17 @@
 # Proyecto de Fake Ecommerce
 
-Este proyecto implementa distintos servicios utilizando NestJS y TypeORM. La base de datos se gestiona con PostgreSQL y TypeORM se usa como el ORM para manejar las interacciones con la base de datos.
+Este proyecto es una simulación de un comercio electrónico que utiliza NestJS y TypeORM para gestionar distintos servicios. Está diseñado para demostrar cómo se pueden integrar estas tecnologías en un entorno de desarrollo real, utilizando PostgreSQL como sistema de gestión de bases de datos. Es ideal para desarrolladores que buscan aprender más sobre el desarrollo de aplicaciones del lado del servidor con NestJS y TypeORM.
+
 
 ## Herramientas Utilizadas
 
-- **NestJS:** Un framework para construir aplicaciones del lado del servidor con Node.js, que proporciona una arquitectura modular y escalable.
-- **TypeORM:** Un ORM para TypeScript y JavaScript que facilita la interacción con la base de datos, en este caso, PostgreSQL.
-- **PostgreSQL:** Sistema de gestión de bases de datos relacional de código abierto utilizado para almacenar los datos del proyecto.
-
-
-A continuación, se describen los servicios disponibles, sus URLs, métodos HTTP y las posibles respuestas.
-
+- **NestJS:** Elegido por su arquitectura modular y escalable, lo que facilita la organización del código y la gestión de dependencias en aplicaciones grandes.
+- **TypeORM:** Utilizado para simplificar las interacciones con la base de datos PostgreSQL, ofreciendo un enfoque orientado a objetos para trabajar con los datos.
+- **PostgreSQL:** Seleccionado por su robustez y flexibilidad como sistema de gestión de bases de datos relacional, ideal para proyectos que requieren alta disponibilidad y escalabilidad.
 
 ## Servicios
+
+Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, productos y pagos. A continuación, se detallan estos servicios, incluyendo sus URLs, métodos HTTP, descripciones y posibles respuestas.
 
 ### Obtener Todos los Usuarios
 
@@ -35,3 +34,48 @@ A continuación, se describen los servicios disponibles, sus URLs, métodos HTTP
       "created_at": "2024-07-30T12:34:56Z"
     }
   ]
+
+### Crear un Nuevo Usuario
+
+**URL:** `/user`  
+**Método HTTP:** `POST`  
+**Descripción:** Crea un nuevo usuario con el correo electrónico proporcionado.
+
+**Body:**
+- **email obligatorio**
+  ```json
+    {
+      "email": "nuevo.usuario@example.com"
+    }
+
+**Respuestas:**
+- **200 OK**
+  ```json
+  {
+    "status": 1,
+    "result": true,
+    "id": 1,
+    "message": "El usuario se creó correctamente."
+  }
+
+  ```json
+  {
+    "status": 2,
+    "result": true,
+    "id": 1,
+    "message": "El usuario ya existe en el sistema."
+  }
+
+  ```json
+  {
+    "status": 3,
+    "result": false,
+    "message": "El email no es válido."
+  }
+
+  ```json
+  {
+    "status": 0,
+    "result": false,
+    "message": "Ocurrió un error."
+  }
