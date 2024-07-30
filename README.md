@@ -42,7 +42,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 **Descripción:** Crea un nuevo usuario con el correo electrónico proporcionado.
 
 **Body:**
-- 
+- **json**
   ```json
     {
       "email": "nuevo.usuario@example.com"
