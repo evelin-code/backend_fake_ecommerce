@@ -4,7 +4,7 @@ import { Pay } from './entity/pay.entity';
 import { PayService } from './pay.service';
 import { PayController } from './pay.controller';
 import { Order } from '../order/entity/order';
-import { OrderModule } from 'src/order/order.module';
+import { OrderModule } from './../order/order.module';
 
 @Module({
   imports: [

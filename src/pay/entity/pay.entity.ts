@@ -1,13 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
-import { Order } from 'src/order/entity/order';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, Index } from 'typeorm';
+import { Order } from './../../order/entity/order';
 
 @Entity('tw_transactions')
 export class Pay {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 250, unique: true })
-  reference: string;
+  @Column({ type: 'varchar', length: 250, unique: true, nullable: true })
+  reference?: string;
 
   @Column({ type: 'decimal', precision: 12, scale: 2 })
   total_cost: number;
@@ -31,6 +31,7 @@ export class Pay {
   cus: string | null;
 
   @Column({ type: 'int', nullable: false })
+  @Index({ unique: true })
   order_id: number;
 
   @OneToOne(() => Order, order => order.transaction)
