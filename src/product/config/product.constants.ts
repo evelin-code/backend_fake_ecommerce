@@ -31,5 +31,25 @@ export const ProductConstants = {
     status: 6,
     result: false,
     message: 'No se pudo calcular el valor total.',
-  }
+  },
+  ORDER_NOT_FOUND: {
+    status: 7,
+    result: false,
+    message: 'La orden no se encontró.',
+  },
+  ORDER_STATUS_NOT_VALID: {
+    status: 8,
+    result: false,
+    message: 'El estado de la orden no es válido para actualizar el stock.',
+  },
+  STOCK_UPDATED: {
+    status: 9,
+    result: true,
+    message: 'El stock de los productos se actualizó correctamente.',
+  },
+  STOCK_UPDATE_FAILED: {
+    status: 10,
+    result: false,
+    message: 'No se pudo actualizar el stock de los productos.',
+  },
 };
