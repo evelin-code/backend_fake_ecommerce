@@ -12,7 +12,7 @@ export const UserConstants = {
     message: "El usuario ya existe en el sistema.",
   }),
   EMAIL_INVALID: {
-    status: 0,
+    status: 3,
     result: false,
     message: "El email no es válido."
   },
