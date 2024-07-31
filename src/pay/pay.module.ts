@@ -5,10 +5,11 @@ import { PayService } from './pay.service';
 import { PayController } from './pay.controller';
 import { Order } from '../order/entity/order';
 import { OrderModule } from './../order/order.module';
+import { User } from '../user/entity/user';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Pay, Order]),
+    TypeOrmModule.forFeature([Pay, Order, User]),
     OrderModule,
   ],
   providers: [PayService],
