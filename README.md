@@ -341,3 +341,95 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "result": false,
     "message": "Ocurrió un error al crear la transacción."
   }
+
+
+### Obtener Token de Aceptación por Parte de la Pasarela
+
+**URL:** `/pay/getAcceptanceToken`  
+**Método HTTP:** `GET`  
+**Descripción:** Obtiene un token de aceptación válido para el proceso de pago con la pasarela.
+
+**Respuestas:**
+
+- **200 code http**
+  ```json
+  {
+    "acceptance_token": "token-example",
+    "permalink": "url-pdf"
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 4,
+    "result": false,
+    "message": "Fallo al recuperar el token de aceptación."
+  }
+
+### Obtener Tokenización de la Tarjeta de Crédito
+
+**URL:** `/pay/tokenizeCard`  
+**Método HTTP:** `POST`  
+**Descripción:** Obtiene la tokenización de la tarjeta de crédito para el proceso de pago con la pasarela.
+
+**Body:**
+- **json**
+  ```json
+  {
+    "number": "4242424242424242",
+    "cvc": "123",
+    "exp_month": "08",
+    "exp_year": "28",
+    "card_holder": "José Pérez"
+  }
+
+**Respuestas:**
+- **200 code http**
+  ```json
+  {
+    "id": "token-example"
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 5,
+    "result": false,
+    "message": "Fallo al tokenizar la tarjeta de crédito."
+  }
+
+### Crear Transacción en la pasarela.
+
+**URL:** `/pay/createGatewayTransaction`  
+**Método HTTP:** `POST`  
+**Descripción:** Crea la transacción en la pasarela.
+
+**Body:**
+- **json**
+  ```json
+  {
+    "reference": "referencia",
+    "installments": 2,
+    "acceptance_token": "token-example",
+    "id_tokenizacion": "token-example"
+  }
+
+**Respuestas:**
+- **200 code http**
+  ```json
+  {
+    "id": "15113-1722447534-72768"
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 422,
+    "result": false,
+    "message": "Validation error occurred",
+    "details": {
+      "reference": [
+        "La referencia ya ha sido usada"
+      ]
+    }
+  }
