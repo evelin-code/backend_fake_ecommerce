@@ -24,4 +24,21 @@ export class PayController {
   async createGatewayTransaction(@Body() data: { reference: string, installments: number, acceptance_token: string, id_tokenizacion: string }): Promise<any> {
     return this.payService.createGatewayTransaction(data);
   }
+
+  @Post('details')
+  async getTransactionDetails(@Body() body: { idTransaction: string; },): Promise<any> {
+    return this.payService.getTransactionDetails(body);
+  }
+
+  @Post('updateTransaction')
+  async updateTransaction(@Body() body: {
+    reference: string;
+    type: string;
+    finalized_at: string;
+    brand: string;
+    id: string;
+    status: string;
+  }): Promise<any> {
+    return await this.payService.updateTransaction(body);
+  }
 }

@@ -6,10 +6,11 @@ import { PayController } from './pay.controller';
 import { Order } from '../order/entity/order';
 import { OrderModule } from './../order/order.module';
 import { User } from '../user/entity/user';
+import { PayLog } from './entity/pay-log.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Pay, Order, User]),
+    TypeOrmModule.forFeature([Pay, Order, User, PayLog]),
     OrderModule,
   ],
   providers: [PayService],

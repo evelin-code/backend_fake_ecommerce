@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Pay } from './entity/pay.entity';
 import { User } from './../user/entity/user';
 import { Order } from './../order/entity/order'; 
+import { PayLog } from './entity/pay-log.entity';
 import { PayConstants, ErrorConstants } from './config/pay.constants';
 import { Keys } from './config/gateway-keys.constants';
 import { Urls } from './config/gateway-urls.constants';
@@ -21,6 +22,8 @@ export class PayService {
     private readonly orderRepository: Repository<Order>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(PayLog)
+    private readonly payLogRepository: Repository<PayLog>,
   ) {}
 
   async createTransaction(orderId: number): Promise<any> {
@@ -120,6 +123,7 @@ export class PayService {
           installments,
           token: id_tokenizacion,
           sandbox_status: 'APPROVED',
+          // sandbox_status: 'PENDING',
         },
       }, {
         headers: {
@@ -148,6 +152,82 @@ export class PayService {
     hash.update(cadenaConcatenada);
   
     return hash.digest('hex');
+  }
+
+  async getTransactionDetails({ idTransaction }: { idTransaction: string;}): Promise<any> {
+    try {
+      const url = `${Urls.URL_TRANSVERAL}/${idTransaction}`;
+      const response = await axios.get(url, {
+        headers: {
+          'Authorization': `Bearer ${Keys.PRIVATE_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      await this.saveLogTransaction({
+        reference: response.data.data.reference,
+        status: response.data.data.status,
+        data_out: JSON.stringify(response.data),
+      });
+
+      if (response.data.data.status === 'APPROVED') {
+        const paymentMethod = response.data.data.payment_method;
+        return {
+          reference: response.data.data.reference,
+          type: paymentMethod.type,
+          finalized_at: response.data.data.finalized_at,
+          brand: paymentMethod.extra.brand,
+          id: response.data.data.id,
+          status: response.data.data.status,
+        };
+      } else {
+        return { status: response.data.status };
+      }
+    } catch (error) {
+      return this.handleAxiosError(error);
+    }
+  }
+
+  private async saveLogTransaction({ reference, status, data_out }: { reference: string; status: string; data_out: string }): Promise<void> {
+    await this.payLogRepository.save({
+      reference,
+      status,
+      data_out,
+      created_at: new Date(),
+    });
+  }
+
+  async updateTransaction({reference, type, finalized_at, brand, id, status, }: {
+    reference: string;
+    type: string;
+    finalized_at: string;
+    brand: string;
+    id: string;
+    status: string;
+  }): Promise<any> {
+    try {
+      const transaction = await this.payRepository.findOneBy({ reference });
+
+      if (!transaction) {
+        return PayConstants.TRANSACTION_NOT_FOUND;
+      }
+
+      transaction.payment_method = type;
+      transaction.payment_date = new Date(finalized_at);
+      transaction.franchise = brand;
+      transaction.cus = id;
+
+      transaction.status = status === 'APPROVED' ? 1 : transaction.status;
+
+      await this.payRepository.save(transaction);
+
+      return PayConstants.TRANSACTION_UPDATE_SUCCESS;
+    } catch (error) {
+      return {
+        ...PayConstants.TRANSACTION_UPDATE_FAILED,
+        message: `${ErrorConstants.REQUEST_SETUP_ERROR.message}: ${error.message}`,
+      };
+    }
   }
 
   private handleAxiosError(error: any): any {

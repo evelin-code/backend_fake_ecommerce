@@ -30,7 +30,22 @@ export const PayConstants = {
     status: 6,
     result: false,
     message: "Fallo al crear la transacción en la pasarela"
-  }
+  },
+  TRANSACTION_NOT_FOUND: {
+    status: 7,
+    result: false,
+    message: "La transacción no se encontró.",
+  },
+  TRANSACTION_UPDATE_SUCCESS: {
+    status: 8,
+    result: true,
+    message: "La transacción se actualizó correctamente.",
+  },
+  TRANSACTION_UPDATE_FAILED: {
+    status: 9,
+    result: false,
+    message: "Error al actualizar la transacción.",
+  },
 };
 
 export const ErrorConstants = {
