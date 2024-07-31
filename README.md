@@ -459,10 +459,11 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 - **200 code http**
   ```json
   {
+    "reference": "reference-example",
     "type": "CARD",
     "finalized_at": "2024-07-31T20:00:42.296Z",
     "brand": "VISA",
-    "id": "15113-1722456040-68465",
+    "id": "15-15",
     "status": "APPROVED"
   }
 
@@ -470,4 +471,39 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
   ```json
   {
     "status": "PENDING",
+  }
+
+### Actualizar los Detalles de la Transacción.
+
+**URL:** `/pay/details`  
+**Método HTTP:** `POST`  
+**Descripción:** Actualiza los detalles de la transacción en la base de datos.
+
+**Body:**
+- **json**
+  ```json
+  {
+    "reference": "reference-example",
+    "type": "CARD",
+    "finalized_at": "2024-07-31T20:00:42.296Z",
+    "brand": "VISA",
+    "id": "15-15",
+    "status": "APPROVED"
+  }
+
+**Respuestas:**
+- **200 code http**
+  ```json
+  {
+    "status": 8,
+    "result": true,
+    "message": "La transacción se actualizó correctamente."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 9,
+    "result": false,
+    "message": "Error al actualizar la transacción."
   }
