@@ -41,5 +41,15 @@ export const OrderConstants = {
     status: 8,
     result: false,
     message: "No se pudo actualizar el estado de la orden."
+  },
+  TRANSACTION_NOT_FOUND: {
+    status: 9,
+    result: false,
+    message: "La transacción no se encontró."
+  },
+  TRANSACTION_STATUS_INVALID: {
+    status: 10,
+    result: false,
+    message: "El estado de la transacción no es válido para actualizar la orden."
   }
 };

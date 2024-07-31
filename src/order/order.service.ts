@@ -6,6 +6,7 @@ import { Product } from './../product/entity/product.entity';
 import { Order } from './entity/order';
 import { OrderItem } from './entity/order-item.entity';
 import { OrderConstants } from './config/order.constants';
+import { Pay } from './../pay/entity/pay.entity';
 
 @Injectable()
 export class OrderService {
@@ -22,6 +23,9 @@ export class OrderService {
 
     @InjectRepository(OrderItem)
     private readonly orderItemRepository: Repository<OrderItem>,
+
+    @InjectRepository(Pay)
+    private readonly payRepository: Repository<Pay>,
   ) {}
 
   async createOrder(userId: number, items: { productId: number; quantity: number }[]): Promise<any> {
@@ -105,8 +109,18 @@ export class OrderService {
 
   async updateOrderStatus(orderId: number): Promise<any> {
     try {
-      const order = await this.orderRepository.findOneBy({ id: orderId });
+      const order = await this.orderRepository.findOne({ 
+        where: { id: orderId },
+        relations: ['transaction']
+      });
       if (!order) return OrderConstants.ORDER_NOT_FOUND;
+
+      const transaction = await this.payRepository.findOne({
+        where: { order: { id: orderId } }
+      });
+
+      if (!transaction) return OrderConstants.TRANSACTION_NOT_FOUND;
+      if (transaction.status !== 1) return OrderConstants.TRANSACTION_STATUS_INVALID;
 
       order.status = 'P';
       await this.orderRepository.save(order);
