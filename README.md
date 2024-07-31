@@ -1,6 +1,6 @@
 # Proyecto de Fake Ecommerce
 
-Este proyecto es una simulación de un comercio electrónico que utiliza NestJS y TypeORM para gestionar distintos servicios. Está diseñado para demostrar cómo se pueden integrar estas tecnologías en un entorno de desarrollo real, utilizando PostgreSQL como sistema de gestión de bases de datos. Es ideal para desarrolladores que buscan aprender más sobre el desarrollo de aplicaciones del lado del servidor con NestJS y TypeORM.
+Este proyecto es una simulación de un comercio electrónico que utiliza NestJS y TypeORM para gestionar distintos servicios. Está diseñado para demostrar cómo se pueden integrar estas tecnologías en un entorno de desarrollo real, utilizando Supabase como plataforma de gestión de bases de datos PostgreSQL. Es ideal para desarrolladores que buscan aprender más sobre el desarrollo de aplicaciones del lado del servidor con NestJS y TypeORM.
 
 
 ## Herramientas Utilizadas
@@ -8,6 +8,7 @@ Este proyecto es una simulación de un comercio electrónico que utiliza NestJS 
 - **NestJS:** Elegido por su arquitectura modular y escalable, lo que facilita la organización del código y la gestión de dependencias en aplicaciones grandes.
 - **TypeORM:** Utilizado para simplificar las interacciones con la base de datos PostgreSQL, ofreciendo un enfoque orientado a objetos para trabajar con los datos.
 - **PostgreSQL:** Seleccionado por su robustez y flexibilidad como sistema de gestión de bases de datos relacional, ideal para proyectos que requieren alta disponibilidad y escalabilidad.
+- **Supabase:** Utilizado como plataforma de backend para gestionar la base de datos PostgreSQL, proporcionando una interfaz moderna y fácil de usar para la administración de datos, autenticación y almacenamiento en tiempo real.
 
 ## Servicios
 
@@ -398,7 +399,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "message": "Fallo al tokenizar la tarjeta de crédito."
   }
 
-### Crear Transacción en la pasarela.
+### Crear Transacción en la Pasarela.
 
 **URL:** `/pay/createGatewayTransaction`  
 **Método HTTP:** `POST`  
