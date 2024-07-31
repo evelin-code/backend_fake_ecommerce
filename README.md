@@ -5,7 +5,7 @@ Este proyecto es una simulación de un comercio electrónico que utiliza NestJS 
 
 ## Índice
 
-1. [Herramientas Utilizadas](#herramientas-utilizadas)
+1. [Herramientas Utilizadas](#Herramientas-Utilizadas)
 2. [Uso de la API](#Uso-de-la-API)
 6. [Pruebas](#pruebas)
 7. [Despliegue](#despliegue)
@@ -440,4 +440,34 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
         "La referencia ya ha sido usada"
       ]
     }
+  }
+
+### Consultar Transacción a la Pasarela.
+
+**URL:** `/pay/details`  
+**Método HTTP:** `POST`  
+**Descripción:** Consulta los detalles de la transacción a la pasarela.
+
+**Body:**
+- **json**
+  ```json
+  {
+    "idTransaction": "1"
+  }
+
+**Respuestas:**
+- **200 code http**
+  ```json
+  {
+    "type": "CARD",
+    "finalized_at": "2024-07-31T20:00:42.296Z",
+    "brand": "VISA",
+    "id": "15113-1722456040-68465",
+    "status": "APPROVED"
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": "PENDING",
   }
