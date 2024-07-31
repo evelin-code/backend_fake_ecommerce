@@ -233,21 +233,21 @@ export class PayService {
   private handleAxiosError(error: any): any {
     if (error.response) {
       const { status, data } = error.response;
-
+  
       if (status === 422 && data.error && data.error.messages) {
         return {
           ...ErrorConstants.VALIDATION_ERROR,
           details: data.error.messages,
         };
       }
-
+  
       if (status >= 400 && status < 500) {
         return {
           ...ErrorConstants.CLIENT_ERROR,
           message: data.message || ErrorConstants.CLIENT_ERROR.message,
         };
       }
-
+  
       if (status >= 500) {
         return ErrorConstants.SERVER_ERROR;
       }
@@ -259,7 +259,7 @@ export class PayService {
         message: `${ErrorConstants.REQUEST_SETUP_ERROR.message}: ${error.message}`,
       };
     }
-
+  
     return ErrorConstants.CREATE_GATEWAY_TRANSACTION_FAILED;
   }
 }
