@@ -207,7 +207,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
   }
 
 
-### Crear un Orden de Compra
+### Crear una Orden de Compra
 
 **URL:** `/order`  
 **Método HTTP:** `POST`  
@@ -273,6 +273,22 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "result": true,
     "id": 2,
     "message": "El estado de la orden se actualizó correctamente."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 10,
+    "result": false,
+    "message": "El estado de la transacción no es válido para actualizar la orden."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 9,
+    "result": false,
+    "message": "La transacción no se encontró."
   }
 
 - **200 code http**
