@@ -306,3 +306,38 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
     "result": false,
     "message": "No se pudo actualizar el estado de la orden."
   }
+
+
+### Crear una transacción
+
+**URL:** `/pay/createTransaction/{idOrder}`  
+**Método HTTP:** `POST`  
+**Descripción:** Crea una nueva transacción de una orden.
+
+**Respuestas:**
+
+- **200 code http**
+  ```json
+  {
+    "status": 1,
+    "result": true,
+    "idTransaction": 1,
+    "reference": "1",
+    "message": "La transacción se creó correctamente."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 2,
+    "result": false,
+    "message": "La orden no se encontró."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 3,
+    "result": false,
+    "message": "Ocurrió un error al crear la transacción."
+  }
