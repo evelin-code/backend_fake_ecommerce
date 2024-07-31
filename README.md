@@ -3,6 +3,13 @@
 Este proyecto es una simulación de un comercio electrónico que utiliza NestJS y TypeORM para gestionar distintos servicios. Está diseñado para demostrar cómo se pueden integrar estas tecnologías en un entorno de desarrollo real, utilizando Supabase como plataforma de gestión de bases de datos PostgreSQL. Es ideal para desarrolladores que buscan aprender más sobre el desarrollo de aplicaciones del lado del servidor con NestJS y TypeORM.
 
 
+## Índice
+
+1. [Herramientas Utilizadas](#herramientas-utilizadas)
+2. [Uso de la API](#Uso-de-la-API)
+6. [Pruebas](#pruebas)
+7. [Despliegue](#despliegue)
+
 ## Herramientas Utilizadas
 
 - **NestJS:** Elegido por su arquitectura modular y escalable, lo que facilita la organización del código y la gestión de dependencias en aplicaciones grandes.
@@ -10,7 +17,7 @@ Este proyecto es una simulación de un comercio electrónico que utiliza NestJS 
 - **PostgreSQL:** Seleccionado por su robustez y flexibilidad como sistema de gestión de bases de datos relacional, ideal para proyectos que requieren alta disponibilidad y escalabilidad.
 - **Supabase:** Utilizado como plataforma de backend para gestionar la base de datos PostgreSQL, proporcionando una interfaz moderna y fácil de usar para la administración de datos, autenticación y almacenamiento en tiempo real.
 
-## Servicios
+## Uso de la API
 
 Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, productos y pagos. A continuación, se detallan estos servicios, incluyendo sus URLs, métodos HTTP, descripciones y posibles respuestas.
 
