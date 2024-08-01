@@ -508,7 +508,7 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 
 ### Actualizar los Detalles de la Transacción.
 
-**URL:** `/pay/details`  
+**URL:** `/pay/updateTransaction`  
 **Método HTTP:** `POST`  
 **Descripción:** Actualiza los detalles de la transacción en la base de datos.
 
