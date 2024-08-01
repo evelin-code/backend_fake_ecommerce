@@ -8,7 +8,7 @@ Este proyecto es una simulación de un comercio electrónico que utiliza NestJS 
 1. [Herramientas Utilizadas](#Herramientas-Utilizadas)
 2. [Uso de la API](#Uso-de-la-API)
 3. [Pruebas](#Pruebas)
-4. [Despliegue](#despliegue)
+4. [Despliegue](#Despliegue)
 5. [Recursos Adicionales](#Recursos-Adicionales)
 
 ## Herramientas Utilizadas
@@ -564,6 +564,17 @@ Los resultados de las pruebas para el proyecto son los siguientes:
 - **Tiempo Total de Ejecución:** 7.714 s (estimado: 8 s)
 - **Resultado:** Todas las pruebas se han ejecutado exitosamente y no se han encontrado errores.
 
+## Despliegue
+
+El proyecto ha sido desplegado utilizando [Railway](https://railway.app/).
+
+### URL Pública
+
+- **Backend:** [https://nombre-de-tu-backend.railway.app](https://nombre-de-tu-backend.railway.app)
+
+
 ## Recursos Adicionales
 
-- **Colección Postman**: [Visitar](https://docs.nestjs.com/)
+- **Colección Postman**: [Visitar](https://drive.google.com/file/d/1s9RGMTpb7_uLijmRVZsfocgkGjoxVOxO/view?usp=sharing)
+
+- **Esquema de la base de datos**: [Visitar](https://drive.google.com/file/d/1nFAC-Cj6drLDHzSnZuGsTVeJNONqun0p/view?usp=sharing)
