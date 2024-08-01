@@ -107,9 +107,16 @@ describe('PayService', () => {
 
     it('should return CARD_TOKENIZATION_FAILED on error', async () => {
       mockedAxios.post.mockRejectedValue(new Error('Some error'));
+    
+      const result = await service.tokenizeCard({
+        number: '4111111111111111',
+        cvc: '123',
+        exp_month: '12',
+        exp_year: '2024',
+        card_holder: 'John Doe'
+      });
 
-      const result = await service.tokenizeCard({ number: '4111111111111111', cvc: '123', exp_month: '12', exp_year: '2024', card_holder: 'John Doe' });
-      expect(result).toEqual(PayConstants.CARD_TOKENIZATION_FAILED);
+      expect(result).toEqual(ErrorConstants.REQUEST_SETUP_ERROR);
     });
   });
 
@@ -156,12 +163,8 @@ describe('PayService', () => {
       });
   
       const result = await service.getTransactionDetails({ idTransaction: 'trans-id' });
-  
-      expect(result).toEqual({
-        status: 500,
-        result: false,
-        message: 'Server error occurred on Wompi API'
-      });
+
+      expect(result).toEqual(ErrorConstants.SERVER_ERROR);
     });
   });
 

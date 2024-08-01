@@ -402,9 +402,41 @@ Este proyecto ofrece varios servicios RESTful para gestionar usuarios, ordenes, 
 - **200 code http**
   ```json
   {
-    "status": 5,
+    "status": 10,
     "result": false,
-    "message": "Fallo al tokenizar la tarjeta de crédito."
+    "message": "Número de tarjeta inválido. Debe ser un número de 16 dígitos."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 11,
+    "result": false,
+    "message": "CVC inválido. Debe ser un número de 3 o 4 dígitos."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 12,
+    "result": false,
+    "message": "Mes de expiración inválido. Debe estar entre 01 y 12."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 13,
+    "result": false,
+    "message": "Año de expiración inválido. Debe ser un número de 2 o 4 dígitos."
+  }
+
+- **200 code http**
+  ```json
+  {
+    "status": 14,
+    "result": false,
+    "message": "El nombre del titular de la tarjeta es requerido."
   }
 
 ### Crear Transacción en la Pasarela.

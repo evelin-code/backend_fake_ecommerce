@@ -62,19 +62,55 @@ export class PayService {
     }
   }
 
+  private validateCardDetails(number: string, cvc: string, exp_month: string, exp_year: string, card_holder: string) {
+    const cardNumberPattern = /^\d{16}$/;
+    const cvcPattern = /^\d{3,4}$/;
+    const expMonthPattern = /^(0[1-9]|1[0-2])$/;
+    const expYearPattern = /^\d{2}$|^\d{4}$/;
+
+    if (!cardNumberPattern.test(number)) {
+      return PayConstants.CARD_NUMBER_INVALID;
+    }
+    if (!cvcPattern.test(cvc)) {
+      return PayConstants.CVC_INVALID;
+    }
+    if (!expMonthPattern.test(exp_month)) {
+      return PayConstants.EXP_MONTH_INVALID;
+    }
+    if (!expYearPattern.test(exp_year)) {
+      return PayConstants.EXP_YEAR_INVALID;
+    }
+    if (!card_holder) {
+      return PayConstants.CARD_HOLDER_REQUIRED;
+    }
+    return null;
+  }
+
   async tokenizeCard(cardDetails: { number: string, cvc: string, exp_month: string, exp_year: string, card_holder: string }): Promise<any> {
+    const { number, cvc, exp_month, exp_year, card_holder } = cardDetails;
+    const validationError = this.validateCardDetails(number, cvc, exp_month, exp_year, card_holder);
+    if (validationError) {
+      return validationError;
+    }
+
     try {
-      const response = await axios.post(Urls.URL_TOKENIZE_CARD, cardDetails, {
+      const response = await axios.post(Urls.URL_TOKENIZE_CARD, { number, cvc, exp_month, exp_year, card_holder }, {
         headers: {
           Authorization: `Bearer ${Keys.PUBLIC_KEY}`,
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
 
       const { id } = response.data.data;
       return { id };
-    } catch {
-      return PayConstants.CARD_TOKENIZATION_FAILED;
+    } catch (error) {
+      if (error.response) {
+        return ErrorConstants.SERVER_ERROR;
+      } else if (error.request) {
+        return ErrorConstants.NO_RESPONSE;
+      } else {
+        return ErrorConstants.REQUEST_SETUP_ERROR;
+      }
     }
   }
 
